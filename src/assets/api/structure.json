@@ -1,0 +1,14 @@
+{
+  "structure": [
+    {
+      "id": "client-a",
+      "title": "Element A",
+      "src": "client-a/main.js"
+    },
+    {
+      "id": "client-b",
+      "title": "Element B",
+      "src": "client-b/main.js"
+    }
+  ]
+}

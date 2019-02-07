@@ -1,8 +1,12 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { IntegrationService } from './integration.service';
+import { Subscription, merge } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+
+import { AppState } from 'app/store/state/app.state';
+import { selectSelectedItem } from 'app/store/selectors/structure.selectors';
+import { GetStructureItem } from 'app/store/actions/structure.action';
+import { tap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-integration',
@@ -11,16 +15,17 @@ import { IntegrationService } from './integration.service';
 })
 export class IntegrationComponent implements OnInit, OnDestroy {
   @ViewChild('content') content: ElementRef;
+
+  structureItem$ = this.store.pipe(select(selectSelectedItem));
+  id$ = this.route.params.pipe(map(params => params.id));
   private sub: Subscription;
 
-  constructor(private route: ActivatedRoute, private service: IntegrationService) { }
+  constructor(private store: Store<AppState>, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.sub = this.route.params.pipe(
-      tap(params => {
-        const structure = this.service.getStructure(params['id']);
-        this.setupComponent(structure.id, structure.src);
-      }),
+    this.sub = merge(
+      this.structureItem$.pipe(tap(item => { if (item) { this.setupComponent(item.id, item.src); } })),
+      this.id$.pipe(tap(id => this.store.dispatch(new GetStructureItem(id)))),
     ).subscribe();
   }
 
@@ -36,7 +41,7 @@ export class IntegrationComponent implements OnInit, OnDestroy {
 
     const elem = document.createElement(id);
     content.appendChild(elem);
-    
+
     const script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = src;

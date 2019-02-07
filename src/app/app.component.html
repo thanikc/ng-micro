@@ -1,5 +1,5 @@
 <mat-menu #appMenu="matMenu">
-  <ng-container *ngFor="let item of structure">
+  <ng-container *ngFor="let item of (structure$ | async)">
     <button mat-menu-item routerLink="element/{{item.id}}" routerLinkActive="active">{{item.title}}</button>
   </ng-container>
 </mat-menu>

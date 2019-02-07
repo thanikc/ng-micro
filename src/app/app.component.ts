@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { IntegrationService, Structure } from './integration/integration.service';
+import { Store, select } from '@ngrx/store';
+import { AppState } from './store/state/app.state';
+import { GetStructure } from './store/actions/structure.action';
+import { selectItems } from './store/selectors/structure.selectors';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
-  structure: Structure[];
-  title = 'ng-micro';
+export class AppComponent implements OnInit {
+  structure$ = this.store.pipe(select(selectItems));
 
-  constructor(private integrationService: IntegrationService) {}
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.structure = this.integrationService.structure;
+    this.store.dispatch(new GetStructure());
   }
 }
