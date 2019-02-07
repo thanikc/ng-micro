@@ -12,8 +12,8 @@ export class IntegrationService {
    * mocked structure - this could be loaded from something like a config server
    */
   _structure = [
-    { id: 'client-a', title: 'ClientA', src: 'client-a/main.js' },
-    { id: 'client-b', title: 'ClientB', src: 'client-b/main.js' },
+    { id: 'client-a', title: 'Element A', src: 'client-a/main.js' },
+    { id: 'client-b', title: 'Element B', src: 'client-b/main.js' },
   ];
 
   get structure(): Structure[] {

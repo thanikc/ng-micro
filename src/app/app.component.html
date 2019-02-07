@@ -1,7 +1,13 @@
-<ul id="nav" *ngFor="let item of structure">
-  <li>
-    <a routerLink="element/{{item.id}}" routerLinkActive="active">{{item.title}}</a>
-  </li>
-</ul>
+<mat-menu #appMenu="matMenu">
+  <ng-container *ngFor="let item of structure">
+    <button mat-menu-item routerLink="element/{{item.id}}" routerLinkActive="active">{{item.title}}</button>
+  </ng-container>
+</mat-menu>
+
+<mat-toolbar>
+  <button mat-icon-button [matMenuTriggerFor]="appMenu">
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
 
 <router-outlet></router-outlet>
