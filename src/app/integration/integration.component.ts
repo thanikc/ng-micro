@@ -8,7 +8,7 @@ import { AppState } from 'app/store/state/app.state';
 import { selectSelectedItem, selectItems } from 'app/store/selectors/structure.selectors';
 import { GetStructureItem } from 'app/store/actions/structure.action';
 import { StructureItem } from 'app/models/structure.interface';
-import { UIContextImpl } from './ui-context';
+import { UIContextService } from '../services/ui-context.service';
 
 @Component({
   selector: 'app-integration',
@@ -21,7 +21,7 @@ export class IntegrationComponent implements OnInit, OnDestroy {
   structureItem$ = this.store.pipe(select(selectSelectedItem));
   private sub: Subscription;
 
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) { }
+  constructor(private store: Store<AppState>, private route: ActivatedRoute, private context: UIContextService) { }
 
   ngOnInit() {
     this.sub = this.store.pipe(select(selectItems)).pipe(
@@ -52,7 +52,7 @@ export class IntegrationComponent implements OnInit, OnDestroy {
     for (let key in item.props) {
       elem.setAttribute(key, item.props[key]);
     }
-    elem['context'] = new UIContextImpl();
+    elem['context'] = this.context;
     content.appendChild(elem);
   }
 

@@ -15,6 +15,8 @@ import { IntegrationComponent } from './integration/integration.component';
 import { MaterialModule } from './material.module';
 import { StructureService } from './services/structure.service';
 import { StructureEffects } from './store/effects/structure.effects';
+import { NotificationService } from './services/notification.service';
+import { UIContextService } from './services/ui-context.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,11 @@ import { StructureEffects } from './store/effects/structure.effects';
     BrowserAnimationsModule,
     MaterialModule,
   ],
-  providers: [StructureService],
+  providers: [
+    StructureService,
+    NotificationService,
+    UIContextService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
