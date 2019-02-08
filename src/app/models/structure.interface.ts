@@ -3,5 +3,6 @@ export interface StructureItem {
   title: string;
   src: string;
   dependencies?: string[];
-  props?: { [key: string]: any }
+  props?: { [key: string]: any };
+  children?: StructureItem[];
 }

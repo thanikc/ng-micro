@@ -8,6 +8,7 @@ import { AppState } from 'app/store/state/app.state';
 import { selectSelectedItem, selectItems } from 'app/store/selectors/structure.selectors';
 import { GetStructureItem } from 'app/store/actions/structure.action';
 import { StructureItem } from 'app/models/structure.interface';
+import { UIContextImpl } from './ui-context';
 
 @Component({
   selector: 'app-integration',
@@ -51,8 +52,8 @@ export class IntegrationComponent implements OnInit, OnDestroy {
     for (let key in item.props) {
       elem.setAttribute(key, item.props[key]);
     }
-    
-    content.appendChild(elem);    
+    elem['context'] = new UIContextImpl();
+    content.appendChild(elem);
   }
 
   setupDependencies(item: StructureItem): void {

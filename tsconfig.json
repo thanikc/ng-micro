@@ -19,7 +19,15 @@
       "dom"
     ],
     "paths": {
-      "app/*": ["src/app/*"]
+      "app/*": [
+        "src/app/*"
+      ],
+      "ui-context": [
+        "dist/ui-context"
+      ],
+      "ui-context/*": [
+        "dist/ui-context/*"
+      ]
     }
   }
 }

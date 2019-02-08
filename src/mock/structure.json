@@ -1,9 +1,13 @@
 {
+  "id": "menu",
   "structure": [
     {
       "id": "client-a",
       "title": "Element A",
-      "src": "mock/client-a/main.js"
+      "src": "mock/client-a/main.js",
+      "props": { 
+        "title": "Foo Bar"
+      }
     },
     {
       "id": "client-b",
