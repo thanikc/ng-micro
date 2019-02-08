@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "http-server dist/ng-micro",
+    "start": "ng serve",
+    "start:dist": "http-server dist/ng-micro",
     "build": "npm run build:ng-micro && npm run build:client-a && npm run build:client-b",
     "build:ng-micro": "ng build --prod --extraWebpackConfig webpack.extra.js --single-bundle false",
     "build:client-a": "ng build client-a --prod --extraWebpackConfig webpack.extra.js --output-hashing none --single-bundle true",
