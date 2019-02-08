@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
-import { map, withLatestFrom, switchMap } from 'rxjs/operators';
+import { map, withLatestFrom, switchMap, tap } from 'rxjs/operators';
 
 import { AppState } from '../state/app.state';
 import { StructureService } from 'app/services/structure.service';
@@ -24,6 +24,7 @@ export class StructureEffects {
     map(action => action.payload),
     withLatestFrom(this.store.pipe(select(selectItems))),
     switchMap(([id, structure]) => {
+      console.debug('getStructureItem$ - items', structure);
       const selectedItem = structure.filter(item => item.id === id)[0];
       return of(new GetStructureItemSuccess(selectedItem));
     }),
@@ -33,7 +34,7 @@ export class StructureEffects {
   getStructure$ = this.actions$.pipe(
     ofType<GetStructure>(EStructureActions.GetStructure),
     switchMap(() => this.structureService.getStructure()),
-    switchMap((structureHttp: StructureHttp) => of(new GetStructureSuccess(structureHttp.structure)))
+    switchMap((structureHttp: StructureHttp) => { console.debug('getStructure$ - structureHttp', structureHttp); return of(new GetStructureSuccess(structureHttp.structure)) }),
   );
 
   constructor(
