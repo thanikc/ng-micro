@@ -16,20 +16,18 @@ import { tap, map, switchMapTo, distinctUntilChanged } from 'rxjs/operators';
 export class IntegrationComponent implements OnInit, OnDestroy {
   @ViewChild('content') content: ElementRef;
 
-  structure$ = this.store.pipe(select(selectItems));
   structureItem$ = this.store.pipe(select(selectSelectedItem));
-  id$ = this.route.params.pipe(map(params => params.id));
   private sub: Subscription;
-
+  
   constructor(private store: Store<AppState>, private route: ActivatedRoute) { }
-
+  
   ngOnInit() {
-    this.sub = this.structure$.pipe(
+    this.sub = this.store.pipe(select(selectItems)).pipe(
       distinctUntilChanged(),
       switchMapTo(this.structureItem$),
-      tap(item => { console.debug(item); if (item) { this.setupComponent(item.id, item.src); } }),
-      switchMapTo(this.id$),
-      tap(id => this.store.dispatch(new GetStructureItem(id))),
+      tap(item => { if (item) { this.setupComponent(item.id, item.src); } }),
+      switchMapTo(this.route.params),
+      map(params => this.store.dispatch(new GetStructureItem(params.id))),
     ).subscribe();
   }
 
