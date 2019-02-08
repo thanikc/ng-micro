@@ -7,6 +7,6 @@ export class UIContextService implements UIContext {
     constructor(private notificationService: NotificationService) {}
     
     alert(message: string): void {
-        this.notificationService.noticifation.next(message);
+        this.notificationService.sendMessage(message);
     }
 }
