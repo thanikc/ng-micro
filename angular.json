@@ -20,7 +20,8 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/mock"
             ],
             "styles": [
               "src/styles.css"
@@ -33,6 +34,10 @@
           },
           "configurations": {
             "production": {
+              "assets": [
+                "src/favicon.ico",
+                "src/assets"
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

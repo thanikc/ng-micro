@@ -1,0 +1,23 @@
+{
+  "structure": [
+    {
+      "id": "client-a",
+      "title": "Element A",
+      "src": "mock/client-a/main.js"
+    },
+    {
+      "id": "client-b",
+      "title": "Element B",
+      "src": "mock/client-b/main.js"
+    },
+    {
+      "id": "my-custom-element",
+      "title": "Element Vue",
+      "src": "mock/my-custom-element.js",
+      "dependencies": ["https://unpkg.com/vue"],
+      "props": { 
+        "msg": "test"
+      }
+    }
+  ]
+}
