@@ -7,7 +7,7 @@ The tsconfig.ts is configured with 'es2015' as target and will not work in Inter
 ## Quick Start
 `npm i`
 
-`npm run build && npm start`
+`npm start`
 
 ## Features that are covered by the POC
 - Dynamically loaded configurable web components
