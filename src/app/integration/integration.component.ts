@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -26,15 +26,15 @@ export class IntegrationComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.store.pipe(select(selectItems)).pipe(
       distinctUntilChanged(),
-      switchMapTo(this.structureItem$),
+      switchMapTo(this.route.params), // route parameters
+      map(params => this.store.dispatch(new GetStructureItem(params.id))),
+      switchMapTo(this.structureItem$), // selected menu item
       tap(item => {
         if (item) {
           this.setupDependencies(item);
           this.setupComponent(item);
         }
       }),
-      switchMapTo(this.route.params),
-      map(params => this.store.dispatch(new GetStructureItem(params.id))),
     ).subscribe();
   }
 
@@ -42,7 +42,11 @@ export class IntegrationComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  setupComponent(item: StructureItem): void {
+  /**
+   * Setup content based on menu item
+   * @param item 
+   */
+  private setupComponent(item: StructureItem): void {
     const content = this.content.nativeElement;
     while (content.firstChild) {
       content.removeChild(content.firstChild);
@@ -56,14 +60,23 @@ export class IntegrationComponent implements OnInit, OnDestroy {
     content.appendChild(elem);
   }
 
-  setupDependencies(item: StructureItem): void {
+  /**
+   * Setup javascript dependencies
+   * @param item 
+   */
+  private setupDependencies(item: StructureItem): void {
     for (let src of item.dependencies || []) {
       this.createScript(src);
     }
     this.createScript(item.src);
   }
 
-  createScript(src: string, async = false): void {
+  /**
+   * Create script tag
+   * @param src 
+   * @param async 
+   */
+  private createScript(src: string, async = false): void {
     if (!document.querySelector(`script[src="${src}"]`)) {
       const script = document.createElement('script');
       script.type = 'text/javascript';
