@@ -9,6 +9,8 @@
     "build:ng-micro": "ng build --prod --extraWebpackConfig webpack.extra.js --single-bundle false",
     "build:client-a": "ng build client-a --prod --extraWebpackConfig webpack.extra.js --output-hashing none --single-bundle true",
     "build:client-b": "ng build client-b --prod --extraWebpackConfig webpack.extra.js --output-hashing none --single-bundle true",
+    "i18n": "ng xi18n --output-path i18n --i18n-locale de && npm run i18n:code && xliffmerge --profile xliffmerge.json en de",
+    "i18n:code": "ngx-extractor -i src/**/*.ts -f xlf -o src/i18n/messages.xlf",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -31,6 +33,7 @@
     "@ngrx/router-store": "^7.3.0",
     "@ngrx/store": "^7.3.0",
     "@ngrx/store-devtools": "^7.3.0",
+    "@ngx-translate/i18n-polyfill": "^1.0.0",
     "@webcomponents/custom-elements": "^1.2.1",
     "application": "^0.1.4",
     "core-js": "^2.6.5",

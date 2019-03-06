@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, TRANSLATIONS, LOCALE_ID } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
@@ -35,6 +35,14 @@ import { UIContextService } from './services/ui-context.service';
     MaterialModule,
   ],
   providers: [
+    {
+      provide: TRANSLATIONS,
+      useFactory: (locale: string) => {
+          locale = locale || 'de';
+          return require(`raw-loader!../i18n/messages.${locale}.xlf`);
+      },
+      deps: [LOCALE_ID]
+  },
     StructureService,
     NotificationService,
     UIContextService,

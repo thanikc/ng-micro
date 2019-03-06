@@ -34,6 +34,9 @@
           },
           "configurations": {
             "production": {
+              "i18nFile": "src/i18n/messages.en.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "en",
               "assets": [
                 "src/favicon.ico",
                 "src/assets"

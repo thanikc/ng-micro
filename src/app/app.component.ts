@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone, Inject, LOCALE_ID } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -18,10 +18,11 @@ export class AppComponent implements OnInit, OnDestroy {
   private sub: Subscription;
 
   constructor(
+    @Inject(LOCALE_ID) private localeId: string,
     private store: Store<AppState>,
     private zone: NgZone,
     private notificationService: NotificationService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
   ) {
     this.sub = notificationService.notification$.subscribe(message => {
       this.zone.run(() => {
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.store.dispatch(new GetStructure());
+    console.debug("Language:", this.localeId);
   }
 
   ngOnDestroy() {
